@@ -35,6 +35,13 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
+            <Button
+                x:Name="navigate"
+                Text="Go to login page"
+                SemanticProperties.Hint="leads to login page"
+                Clicked="OnNavigateClicked"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 
