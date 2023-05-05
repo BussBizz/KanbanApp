@@ -10,9 +10,19 @@ public partial class LoginPage : ContentPage
 	{
 		if (usernameEntry.Text == null || passwordEntry.Text == null)
 		{
-			validationLabel.Text = "Der er felter som ikke er udfyldt korrekt"; return;
-		}
-        validationLabel.Text = string.Empty;
-        await Navigation.PopAsync();
+           await DisplayAlert("Ugyldigt", "Der er felter som ikke er udfyldt korrekt", "OK");
+           return;
+        }
+        await SecureStorage.SetAsync("hasAuth", "true");
+        await Shell.Current.GoToAsync(nameof(MainPage));
+    }
+    protected override bool OnBackButtonPressed()
+    {
+        Application.Current.Quit();
+        return true;
+    }
+    private async void OnNewUserClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SignupPage));
     }
 }
