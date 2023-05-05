@@ -1,48 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="KanbanApp.MainPage">
-
+             x:Class="KanbanApp.MainPage"
+             xmlns:local="clr-namespace:KanbanApp"
+             x:DataType="local:MainPageViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="navigate"
-                Text="Go to login page"
-                SemanticProperties.Hint="leads to login page"
-                Clicked="OnNavigateClicked"
-                HorizontalOptions="Center" />
-
+            Spacing="25">
+            <Border Padding="0,10" >
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+                    <Button
+                        Text="Indstillinger"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        Clicked="OnNavigateToSettings"
+                        />
+                    <Button
+                        x:Name="update"
+                        Text="Opdater"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                    <Button
+                        x:Name="add"
+                        Text="Nyt board"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                </HorizontalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
