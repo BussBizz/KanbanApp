@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KanbanApp.MainPage"
-             xmlns:local="clr-namespace:KanbanApp"
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
-             x:DataType="viewmodel:MainViewModel">
+             x:DataType="viewmodel:MainViewModel"
+             xmlns:model="clr-namespace:KanbanApp.Models">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
     </Shell.BackButtonBehavior>
@@ -36,6 +36,22 @@
                         />
                 </HorizontalStackLayout>
             </Border>
+            <CollectionView ItemsSource="{Binding TestBoard}">
+                <CollectionView.HeaderTemplate>
+                    <DataTemplate >
+                        <Label FontSize="Header" Text="Boards"/>
+                    </DataTemplate>
+                </CollectionView.HeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Board}">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Id}"/>
+                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=GoToBoardCommand}"
+                                    CommandParameter="{Binding .}" Text="Go"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
