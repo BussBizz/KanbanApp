@@ -10,5 +10,11 @@
         // Collection prop
         public ICollection<Board> Boards { get; set; } = null!;
         public ICollection<Member> Memberships { get; set; } = null!;
+
+        public User() 
+        { 
+            Boards = new List<Board>();
+            Memberships = new List<Member>();
+        }
     }
 }
