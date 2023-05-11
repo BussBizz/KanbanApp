@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using KanbanApp.Models;
+using KanbanApp.Pages;
 
 namespace KanbanApp.ViewModels
 {
@@ -8,5 +10,24 @@ namespace KanbanApp.ViewModels
     {
         [ObservableProperty]
         private Board _currentBoard;
+        public async void BackButton()
+        {
+            foreach (var page in Shell.Current.Navigation.NavigationStack)
+            {
+                if (page != null && page.GetType() == typeof(CreateBoardPage))
+                {
+                    Shell.Current.Navigation.RemovePage(page);
+                    break;
+                }
+            }
+            var param = new Dictionary<string, object> { { "newBoard", CurrentBoard } };
+            
+            await Shell.Current.GoToAsync("..", param);
+        }
+        [RelayCommand]
+        public async Task GoToCreatetask()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateTaskPage));
+        }
     }
 }

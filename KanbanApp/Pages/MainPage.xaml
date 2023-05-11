@@ -9,7 +9,7 @@
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
     </Shell.BackButtonBehavior>
     <ScrollView>
-        <VerticalStackLayout
+        <StackLayout
             Spacing="25">
             <Border Padding="0,10" >
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
@@ -33,10 +33,11 @@
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
+                        Command="{Binding GoToCreateBoardCommand}"
                         />
                 </HorizontalStackLayout>
             </Border>
-            <CollectionView ItemsSource="{Binding TestBoard}">
+            <CollectionView ItemsSource="{Binding BoardList}">
                 <CollectionView.HeaderTemplate>
                     <DataTemplate >
                         <Label FontSize="Header" Text="Boards"/>
@@ -44,14 +45,14 @@
                 </CollectionView.HeaderTemplate>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:Board}">
-                        <VerticalStackLayout>
+                        <FlexLayout WidthRequest="100" HeightRequest="50" JustifyContent="Center" HorizontalOptions="Center">
                             <Label Text="{Binding Id}"/>
                             <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=GoToBoardCommand}"
                                     CommandParameter="{Binding .}" Text="Go"/>
-                        </VerticalStackLayout>
+                        </FlexLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

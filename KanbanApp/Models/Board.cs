@@ -17,5 +17,11 @@ namespace KanbanApp.Models
         // Collection prop
         public ICollection<Category> Categories { get; set; } = null!;
         public ICollection<Member> Members { get; set; } = null!;
+
+        public Board() 
+        {
+            Members = new List<Member>();
+            Categories = new List<Category>(); 
+        }
     }
 }

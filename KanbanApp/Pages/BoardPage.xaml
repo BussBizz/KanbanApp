@@ -2,10 +2,38 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KanbanApp.Pages.BoardPage"
-             Title="BoardPage"
+             Title="{Binding CurrentBoard.Titel}"
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
              x:DataType="viewmodel:BoardViewModel">
     <VerticalStackLayout>
-        <Label Text="{Binding CurrentBoard.Id}"/>
+        <Border Padding="0,10" >
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+                <Button
+                        Text="Inviter brugere"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                <Button
+                        x:Name="update"
+                        Text="Opdater"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                <Button
+                        x:Name="add"
+                        Text="Ny Opgave"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+            </HorizontalStackLayout>
+        </Border>
+        <HorizontalStackLayout>
+            <Border Padding="15" >
+                <Label Text="ToDo" FontSize="Header"/>
+            </Border>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
