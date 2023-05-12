@@ -15,25 +15,21 @@
                         FontAttributes="Bold"
                         />
                 <Button
-                        x:Name="update"
-                        Text="Opdater"
-                        Padding="10"
-                        CornerRadius="10"
-                        FontAttributes="Bold"
-                        />
-                <Button
-                        x:Name="add"
                         Text="Ny Opgave"
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
                         />
+                <Button
+                        Text="Ny Kategori"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                    Command="{Binding GoToCreateCategoryCommand}"/>
             </HorizontalStackLayout>
         </Border>
         <HorizontalStackLayout>
-            <Border Padding="15" >
-                <Label Text="ToDo" FontSize="Header"/>
-            </Border>
+            <Label Text="{Binding CurrentBoard.Categories.Count}"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

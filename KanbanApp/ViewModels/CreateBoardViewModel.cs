@@ -3,11 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using KanbanApp.Models;
 using KanbanApp.Pages;
 using KanbanApp.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KanbanApp.ViewModels
 {
@@ -29,7 +24,7 @@ namespace KanbanApp.ViewModels
             try
             {
                 var newBoard = await _boardsService.PostBoard(NewBoard);
-                var param = new Dictionary<string, object> { {"board", newBoard } };
+                var param = new Dictionary<string, object> { { "board", newBoard } };
                 await Shell.Current.GoToAsync(nameof(BoardPage), param);
             }
             catch (Exception e)

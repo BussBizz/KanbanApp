@@ -7,7 +7,7 @@
         public DateTime? Deadline { get; set; }
 
         // FK
-        public int BoardId { get; set;}
+        public int BoardId { get; set; }
         public int? CreatorId { get; set; }
 
         // Navigation prop
@@ -16,5 +16,9 @@
 
         // Collection prop
         public ICollection<KanbanTask> KanbanTasks { get; set; } = null!;
+        public Category()
+        {
+            KanbanTasks = new List<KanbanTask>();
+        }
     }
 }

@@ -39,11 +39,13 @@ namespace KanbanApp.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(CreateBoardPage));
         }
-        
+
         partial void OnNewBoardChanged(Board value)
         {
-            if (value == null) return;
-            BoardList.Add(value);
+            if (value != null && !BoardList.Any(board => board.Id == value.Id))
+            {
+                BoardList.Add(value);
+            }
             NewBoard = null;
         }
     }
