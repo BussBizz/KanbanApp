@@ -14,9 +14,9 @@ namespace KanbanApp.ViewModels
         [ObservableProperty] private ObservableCollection<Category> _categories;
         [ObservableProperty] private bool _isRefreshing;
         private readonly CategoryService _categoryService;
-        public BoardViewModel()
+        public BoardViewModel(CategoryService categoryService)
         {
-            _categoryService = new CategoryService();
+            _categoryService = categoryService;
             Categories = new ObservableCollection<Category>();
         }
         public async void BackButton()

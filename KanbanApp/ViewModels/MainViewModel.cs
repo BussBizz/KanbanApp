@@ -14,8 +14,9 @@ namespace KanbanApp.ViewModels
 
         [ObservableProperty] private ObservableCollection<Board> _boardList;
         [ObservableProperty] private Board? _newBoard;
-        public MainViewModel()
+        public MainViewModel(BoardsService boardsService)
         {
+            _boardsService = boardsService;
             BoardList = new ObservableCollection<Board>();
             GetBoard();
         }

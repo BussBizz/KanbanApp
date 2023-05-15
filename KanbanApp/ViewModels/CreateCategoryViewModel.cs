@@ -10,10 +10,11 @@ namespace KanbanApp.ViewModels
     {
         [ObservableProperty] private Board _currentBoard;
         [ObservableProperty] private Category _newCategory;
-        private CategoryService _categoryService = new CategoryService();
+        private CategoryService _categoryService;
 
-        public CreateCategoryViewModel()
+        public CreateCategoryViewModel(CategoryService categoryService)
         {
+            _categoryService = categoryService;
             NewCategory = new Category();
         }
         [RelayCommand]
