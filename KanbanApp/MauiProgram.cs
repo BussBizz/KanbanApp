@@ -27,6 +27,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CreateCategoryPage>();
         builder.Services.AddTransient<CreateTaskPage>();
         builder.Services.AddTransient<SignupPage>();
+        builder.Services.AddTransient<InvitePage>();
 
         // Viewmodel DI
         builder.Services.AddTransient<LoginViewModel>();
@@ -36,11 +37,15 @@ public static class MauiProgram
         builder.Services.AddTransient<CreateCategoryViewModel>();
         builder.Services.AddTransient<CreateTaskViewModel>();
         builder.Services.AddTransient<SignupViewModel>();
+        builder.Services.AddTransient<InviteViewModel>();
 
         // Service DI
         builder.Services.AddTransient<BoardsService>();
         builder.Services.AddTransient<LoginService>();
         builder.Services.AddTransient<UserService>();
+        builder.Services.AddTransient<CategoryService>();
+        builder.Services.AddTransient<MemberService>();
+        builder.Services.AddTransient<InviteService>();
 
         return builder.Build();
     }

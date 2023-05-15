@@ -37,18 +37,18 @@
                         />
                 </HorizontalStackLayout>
             </Border>
-            <CollectionView ItemsSource="{Binding BoardList}">
+            <CollectionView ItemsSource="{Binding MembershipList}">
                 <CollectionView.HeaderTemplate>
                     <DataTemplate >
                         <Label FontSize="Header" Text="Boards"/>
                     </DataTemplate>
                 </CollectionView.HeaderTemplate>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:Board}">
+                    <DataTemplate x:DataType="{x:Type model:Member}">
                         <FlexLayout WidthRequest="100" HeightRequest="50" JustifyContent="Center" HorizontalOptions="Center">
-                            <Label Text="{Binding Id}"/>
+                            <Label Text="{Binding Board.Titel}"/>
                             <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=GoToBoardCommand}"
-                                    CommandParameter="{Binding .}" Text="Go"/>
+                                    CommandParameter="{Binding Board}" Text="Go"/>
                         </FlexLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

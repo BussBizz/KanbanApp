@@ -51,15 +51,12 @@ namespace KanbanApp.ViewModels
             foreach (var category in cat) { Categories.Add(category); }
             value.Categories = Categories;
         }
-        //[RelayCommand]
-        //public async Task Refresh()
-        //{
-        //    Categories.Clear();
-        //    foreach (var cat in CurrentBoard.Categories)
-        //    {
-        //        Categories.Add(cat);
-        //    }
-        //    IsRefreshing = false;
-        //}
+
+        [RelayCommand]
+        public async Task InviteButton()
+        {
+            var param = new Dictionary<string, object> { { "board", CurrentBoard } };
+            await Shell.Current.GoToAsync(nameof(InvitePage), param);
+        }
     }
 }

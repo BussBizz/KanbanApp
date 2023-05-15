@@ -14,13 +14,13 @@
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
-                        />
-                <Button
+                        Command="{Binding InviteButtonCommand}"/>
+                <!--<Button
                         Text="Ny Opgave"
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
-                        />
+                        />-->
                 <Button
                         Text="Ny Kategori"
                         Padding="10"

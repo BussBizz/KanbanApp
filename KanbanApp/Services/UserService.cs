@@ -18,5 +18,12 @@ namespace KanbanApp.Services
             return result.User;
         }
 
+        public async Task<User> GetUserIdFromName(string username)
+        {
+            var path = $"{apiPath}/name/{username}";
+            var result = await GetData<User>(path);
+            return result;
+        }
+
     }
 }

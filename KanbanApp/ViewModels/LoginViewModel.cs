@@ -48,7 +48,16 @@ namespace KanbanApp.ViewModels
             var username = await SecureStorage.GetAsync("username") ?? Username;
             if (string.IsNullOrEmpty(username)) return;
 
-            var user = await _loginService.Login(username);
+            User? user = null;
+            try
+            {
+                user = await _loginService.Login(username);
+            }
+            catch (Exception e)
+            {
+                await Shell.Current.DisplayAlert("Fejl", e.Message, "Ok");
+            }
+
             if (user == null)
             {
                 SecureStorage.RemoveAll();
