@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace KantineApp.BL.Services;
@@ -18,6 +19,8 @@ public class BaseService
     {
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = await GetAuth();
+
             var requestUri = GetUri(apiPath);
 
             var result = await _httpClient.GetAsync(requestUri);
@@ -113,5 +116,12 @@ public class BaseService
     private Uri GetUri(string path)
     {
         return new Uri(_host + path);
+    }
+
+    private async Task<AuthenticationHeaderValue> GetAuth()
+    {
+        var auth = await SecureStorage.GetAsync("creds");
+
+        return new AuthenticationHeaderValue("Basic", auth);
     }
 }

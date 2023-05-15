@@ -1,6 +1,7 @@
 ﻿namespace KanbanApp;
 
 using KanbanApp.Pages;
+using KanbanApp.Services;
 using KanbanApp.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -29,6 +30,11 @@ public static class MauiProgram
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<BoardViewModel>();
         builder.Services.AddTransient<SignupViewModel>();
+
+        // Service DI
+        builder.Services.AddTransient<BoardsService>();
+        builder.Services.AddTransient<LoginService>();
+        builder.Services.AddTransient<UserService>();
 
         return builder.Build();
     }

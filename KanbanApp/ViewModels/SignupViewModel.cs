@@ -22,10 +22,10 @@ namespace KanbanApp.ViewModels
         [ObservableProperty]
         private string _nameStatusText;
 
-        public SignupViewModel()
+        public SignupViewModel(UserService userService, LoginService loginService)
         {
-            _userService = new UserService();
-            _loginService = new LoginService();
+            _userService = userService;
+            _loginService = loginService;
             NewLogin = new Password();
         }
 
@@ -40,9 +40,11 @@ namespace KanbanApp.ViewModels
 
             try
             {
-                await _userService.CreateUser(NewLogin);
+                NewLogin.User.IsAnon = false;
+                var user = await _userService.CreateUser(NewLogin);
 
-                await Shell.Current.GoToAsync("..");
+                var param = new Dictionary<string, object> { { "username", user.Name } };
+                await Shell.Current.GoToAsync("..", param);
             }
             catch (Exception e)
             {

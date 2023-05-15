@@ -1,4 +1,5 @@
-﻿using KantineApp.BL.Services;
+﻿using KanbanApp.Models;
+using KantineApp.BL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,16 @@ namespace KanbanApp.Services
     {
         private string apiPath = "/api/Login";
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<User> Login(string username)
         {
-            var path = $"{apiPath}/{username}/{password}";
-            var result = await GetData<bool>(path);
+            var path = $"{apiPath}/{username}";
+            var result = await GetData<User>(path);
             return result;
         }
 
         public async Task<bool> CheckUserName(string username)
         {
-            var path = $"{apiPath}/{username}";
+            var path = $"{apiPath}/{username}/check";
             var result = await GetData<bool>(path);
             return result;
         }
