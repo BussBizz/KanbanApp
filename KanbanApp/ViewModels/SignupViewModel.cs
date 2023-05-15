@@ -40,9 +40,7 @@ namespace KanbanApp.ViewModels
 
             try
             {
-                //await _userService.CreateUser(NewLogin);
-                var test = new Password();
-                await _userService.CreateUser(test);
+                await _userService.CreateUser(NewLogin);
 
                 await Shell.Current.GoToAsync("..");
             }
