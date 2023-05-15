@@ -7,15 +7,16 @@ using System.Collections.ObjectModel;
 
 namespace KanbanApp.ViewModels
 {
+    [QueryProperty(nameof(NewBoard), "newBoard")]
     public partial class MainViewModel : ObservableObject
     {
         private BoardsService _boardsService = new BoardsService();
 
-        [ObservableProperty] private ObservableCollection<Board> testBoard;
-
+        [ObservableProperty] private ObservableCollection<Board> _boardList;
+        [ObservableProperty] private Board? _newBoard;
         public MainViewModel()
         {
-            TestBoard = new ObservableCollection<Board>();
+            BoardList = new ObservableCollection<Board>();
             GetBoard();
         }
 
@@ -24,7 +25,7 @@ namespace KanbanApp.ViewModels
             var result = await _boardsService.GetBoards();
             foreach (var board in result)
             {
-                TestBoard.Add(board);
+                BoardList.Add(board);
             }
         }
         [RelayCommand]
@@ -32,6 +33,20 @@ namespace KanbanApp.ViewModels
         {
             var param = new Dictionary<string, object> { { "board", board } };
             await Shell.Current.GoToAsync(nameof(BoardPage), param);
+        }
+        [RelayCommand]
+        public async Task GoToCreateBoard()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateBoardPage));
+        }
+
+        partial void OnNewBoardChanged(Board value)
+        {
+            if (value != null && !BoardList.Any(board => board.Id == value.Id))
+            {
+                BoardList.Add(value);
+            }
+            NewBoard = null;
         }
     }
 }

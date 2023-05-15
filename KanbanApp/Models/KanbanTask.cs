@@ -19,5 +19,9 @@
 
         // Collection prop
         public ICollection<Comment> Comments { get; set; } = null!;
+        public KanbanTask()
+        {
+            Comments = new List<Comment>();
+        }
     }
 }

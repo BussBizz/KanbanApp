@@ -2,10 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KanbanApp.Pages.BoardPage"
-             Title="BoardPage"
+             Title="{Binding CurrentBoard.Titel}"
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
-             x:DataType="viewmodel:BoardViewModel">
+             x:DataType="viewmodel:BoardViewModel"
+             xmlns:model="clr-namespace:KanbanApp.Models">
     <VerticalStackLayout>
-        <Label Text="{Binding CurrentBoard.Id}"/>
+        <Border Padding="0,10" >
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+                <Button
+                        Text="Inviter brugere"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                <Button
+                        Text="Ny Opgave"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        />
+                <Button
+                        Text="Ny Kategori"
+                        Padding="10"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                    Command="{Binding GoToCreateCategoryCommand}"/>
+            </HorizontalStackLayout>
+        </Border>
+        <CollectionView ItemsSource="{Binding Categories}" >
+            <CollectionView.HeaderTemplate>
+                <DataTemplate >
+                    <Label FontSize="Header" Text="Boards"/>
+                </DataTemplate>
+            </CollectionView.HeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Category}">
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Title}"/>
+                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToCreateTaskCommand}"
+                                    CommandParameter="{Binding .}" Text="+" Padding="5,0" Margin="10,2,2,2"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="10">
+                            <Label Text="{Binding KanbanTasks.Count}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
