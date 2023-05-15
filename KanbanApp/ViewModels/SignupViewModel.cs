@@ -8,9 +8,10 @@ namespace KanbanApp.ViewModels
     public partial class SignupViewModel : ObservableObject
     {
         private readonly UserService _userService;
+        private readonly LoginService _loginService;
 
         [ObservableProperty]
-        private User _newUser;
+        private Password _newLogin;
 
         [ObservableProperty]
         private string _userName;
@@ -24,14 +25,14 @@ namespace KanbanApp.ViewModels
         public SignupViewModel()
         {
             _userService = new UserService();
-            NewUser = new User();
-            NewUser.IsAnon = false;
+            _loginService = new LoginService();
+            NewLogin = new Password();
         }
 
         [RelayCommand]
         async Task SignupUser()
         {
-            if (string.IsNullOrEmpty(NewUser.Name) || string.IsNullOrEmpty(NewUser.Password) || NameTakenStatus)
+            if (string.IsNullOrEmpty(NewLogin.User.Name) || string.IsNullOrEmpty(NewLogin.Hash) || NameTakenStatus)
             {
                 await Shell.Current.DisplayAlert("Fejl i oprettelse!", "Prøv igen.", "Ok ;(");
                 return;
@@ -39,7 +40,9 @@ namespace KanbanApp.ViewModels
 
             try
             {
-                await _userService.CreateUser(NewUser);
+                //await _userService.CreateUser(NewLogin);
+                var test = new Password();
+                await _userService.CreateUser(test);
 
                 await Shell.Current.GoToAsync("..");
             }
@@ -51,10 +54,10 @@ namespace KanbanApp.ViewModels
 
         async partial void OnUserNameChanged(string value)
         {
-            if (NewUser.Name == UserName || UserName == String.Empty) return;
+            if (NewLogin.User.Name == UserName || UserName == String.Empty) return;
 
-            NewUser.Name = UserName;
-            NameTakenStatus = await _userService.CheckUserName(NewUser.Name);
+            NewLogin.User.Name = UserName;
+            NameTakenStatus = await _loginService.CheckUserName(NewLogin.User.Name);
         }
 
         partial void OnNameTakenStatusChanged(bool value)

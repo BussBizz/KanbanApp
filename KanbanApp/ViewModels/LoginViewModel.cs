@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using KanbanApp.Models;
 using KanbanApp.Services;
 
@@ -9,13 +10,20 @@ namespace KanbanApp.ViewModels
         private readonly UserService _userService;
 
         [ObservableProperty]
-        private User _currentUser;
+        private string _username;
+
+        [ObservableProperty]
+        private string _password;
 
         public LoginViewModel()
         {
             _userService = new UserService();
         }
 
-
+        [RelayCommand]
+        public async Task Login(User user)
+        {
+            
+        }
     }
 }

@@ -24,7 +24,7 @@
             <Label Text="{Binding NameStatusText}" TextColor="Red"/>
             <Frame Padding="10,0,0,0">
                 <Entry
-                    Text="{Binding NewUser.Password}"
+                    Text="{Binding NewLogin.Hash}"
                     PlaceholderColor="Gray"
                     IsPassword="True"
                     Placeholder="Password" />

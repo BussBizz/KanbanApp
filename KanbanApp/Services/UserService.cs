@@ -12,22 +12,10 @@ namespace KanbanApp.Services
     {
         private string apiPath = "/api/users";
 
-        public async Task<bool> CheckUserName(string username)
+        public async Task<User> CreateUser(Password password)
         {
-            // TODO fix when webAPI is updated
-            //var path = $"{apiPath}/{username}";
-            //var result = await GetData<bool>(path);
-            //return result;
-
-            var rnd = new Random().Next(1, 10);
-
-            return rnd < 5;
-        }
-
-        public async Task<User> CreateUser(User user)
-        {
-            var result = await PostData(user, apiPath);
-            return result;
+            var result = await PostData(password, apiPath);
+            return result.User;
         }
 
     }

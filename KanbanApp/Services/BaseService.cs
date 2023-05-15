@@ -6,7 +6,8 @@ namespace KantineApp.BL.Services;
 public class BaseService
 {
     private HttpClient _httpClient;
-    private string _host = "https://6378-2-111-92-213.ngrok-free.app";
+    //private string _host = "https://6378-2-111-92-213.ngrok-free.app";
+    private string _host = "https://localhost:7126";
 
     public BaseService()
     {
@@ -42,7 +43,8 @@ public class BaseService
         {
             var requestUri = GetUri(apiPath);
 
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var scontent = JsonConvert.SerializeObject(data);
+            HttpContent content = new StringContent(scontent, Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync(requestUri, content);
 
             if (result.IsSuccessStatusCode)

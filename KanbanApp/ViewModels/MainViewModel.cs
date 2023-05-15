@@ -21,11 +21,11 @@ namespace KanbanApp.ViewModels
 
         private async void GetBoard()
         {
-            var result = await _boardsService.GetBoards();
-            foreach (var board in result)
-            {
-                TestBoard.Add(board);
-            }
+            //var result = await _boardsService.GetBoards();
+            //foreach (var board in result)
+            //{
+            //    TestBoard.Add(board);
+            //}
         }
         [RelayCommand]
         public async Task GoToBoard(Board board)
