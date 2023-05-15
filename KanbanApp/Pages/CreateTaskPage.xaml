@@ -2,24 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KanbanApp.Pages.CreateTaskPage"
-             Title="CreateTaskPage">
+             xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
+             x:DataType="viewmodel:CreateTaskViewModel"
+             Title="{Binding Category.Title}">
     <VerticalStackLayout>
         <VerticalStackLayout>
             <VerticalStackLayout Spacing="24" Padding="50">
                 <Frame Padding="10,0,0,0">
                     <Entry
-                    x:Name="boardTitelEntry"
                     PlaceholderColor="Gray"
-                    Placeholder="Navnet på dit board" 
-                    Text="{Binding NewBoard.Titel}"/>
+                    Placeholder="Navnet på din opgave" 
+                    Text="{Binding NewKanbanTask.Title}"/>
                 </Frame>
                 <Frame Padding="10,0,0,0">
-                    <DatePicker Date="{Binding NewBoard.DeadLine}"/>
+                    <DatePicker Date="{Binding NewKanbanTask.Deadline}"/>
                 </Frame>
                 <Button
                 Margin="50,0,50,0"
-                Text="Opret board"
-                Command="{Binding CreateBoardCommand}" />
+                Text="Opret Opgave"
+                Command="{Binding CreateTaskCommand}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
     </VerticalStackLayout>

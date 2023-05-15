@@ -23,5 +23,12 @@ namespace KanbanApp.Services
             var result = await PostData(category, _apiPath);
             return result;
         }
+
+        public async Task<Category[]> GetCategoriesByBoard(int boardId)
+        {
+            var path = $"{_apiPath}/board/{boardId}";
+            var result = await GetData<Category[]>(path);
+            return result;
+        }
     }
 }

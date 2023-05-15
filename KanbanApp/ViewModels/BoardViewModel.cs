@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using KanbanApp.Models;
 using KanbanApp.Pages;
+using KanbanApp.Services;
+using System.Collections.ObjectModel;
 
 namespace KanbanApp.ViewModels
 {
@@ -9,6 +11,14 @@ namespace KanbanApp.ViewModels
     public partial class BoardViewModel : ObservableObject
     {
         [ObservableProperty] private Board _currentBoard;
+        [ObservableProperty] private ObservableCollection<Category> _categories;
+        [ObservableProperty] private bool _isRefreshing;
+        private readonly CategoryService _categoryService;
+        public BoardViewModel()
+        {
+            _categoryService = new CategoryService();
+            Categories = new ObservableCollection<Category>();
+        }
         public async void BackButton()
         {
             foreach (var page in Shell.Current.Navigation.NavigationStack)
@@ -24,9 +34,10 @@ namespace KanbanApp.ViewModels
             await Shell.Current.GoToAsync("..", param);
         }
         [RelayCommand]
-        public async Task GoToCreatetask()
+        public async Task GoToCreateTask(Category category)
         {
-            await Shell.Current.GoToAsync(nameof(CreateTaskPage));
+            var param = new Dictionary<string, object> { { "category", category } };
+            await Shell.Current.GoToAsync(nameof(CreateTaskPage), param);
         }
         [RelayCommand]
         public async Task GoToCreateCategory()
@@ -34,5 +45,21 @@ namespace KanbanApp.ViewModels
             var param = new Dictionary<string, object> { { "board", CurrentBoard } };
             await Shell.Current.GoToAsync(nameof(CreateCategoryPage), param);
         }
+        async partial void OnCurrentBoardChanged(Board value)
+        {
+            var cat = await _categoryService.GetCategoriesByBoard(value.Id);
+            foreach (var category in cat) { Categories.Add(category); }
+            value.Categories = Categories;
+        }
+        //[RelayCommand]
+        //public async Task Refresh()
+        //{
+        //    Categories.Clear();
+        //    foreach (var cat in CurrentBoard.Categories)
+        //    {
+        //        Categories.Add(cat);
+        //    }
+        //    IsRefreshing = false;
+        //}
     }
 }
