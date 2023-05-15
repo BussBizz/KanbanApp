@@ -3,7 +3,7 @@ using KantineApp.BL.Services;
 
 namespace KanbanApp.Services
 {
-    internal class CategoryService : BaseService
+    public class CategoryService : BaseService
     {
         private string _apiPath = "/api/Categories";
         public async Task<Category[]> Getcategories()

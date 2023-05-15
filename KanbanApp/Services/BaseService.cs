@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace KantineApp.BL.Services;
@@ -6,7 +7,8 @@ namespace KantineApp.BL.Services;
 public class BaseService
 {
     private HttpClient _httpClient;
-    private string _host = "https://8bfa-2-111-92-213.ngrok-free.app";
+    //private string _host = "https://6378-2-111-92-213.ngrok-free.app";
+    private string _host = "https://localhost:7126";
 
     public BaseService()
     {
@@ -17,6 +19,8 @@ public class BaseService
     {
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = await GetAuth();
+
             var requestUri = GetUri(apiPath);
 
             var result = await _httpClient.GetAsync(requestUri);
@@ -42,7 +46,8 @@ public class BaseService
         {
             var requestUri = GetUri(apiPath);
 
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var scontent = JsonConvert.SerializeObject(data);
+            HttpContent content = new StringContent(scontent, Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync(requestUri, content);
 
             if (result.IsSuccessStatusCode)
@@ -111,5 +116,12 @@ public class BaseService
     private Uri GetUri(string path)
     {
         return new Uri(_host + path);
+    }
+
+    private async Task<AuthenticationHeaderValue> GetAuth()
+    {
+        var auth = await SecureStorage.GetAsync("creds");
+
+        return new AuthenticationHeaderValue("Basic", auth);
     }
 }

@@ -9,12 +9,13 @@ namespace KanbanApp.ViewModels
 
     public partial class CreateBoardViewModel : ObservableObject
     {
-        private BoardsService _boardsService = new BoardsService();
+        private BoardsService _boardsService;
 
         [ObservableProperty] private Board _newBoard;
 
-        public CreateBoardViewModel()
+        public CreateBoardViewModel(BoardsService boardsService)
         {
+            _boardsService = boardsService;
             NewBoard = new Board();
             NewBoard.OwnerId = 1;
         }

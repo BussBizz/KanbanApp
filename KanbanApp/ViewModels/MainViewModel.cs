@@ -10,12 +10,13 @@ namespace KanbanApp.ViewModels
     [QueryProperty(nameof(NewBoard), "newBoard")]
     public partial class MainViewModel : ObservableObject
     {
-        private BoardsService _boardsService = new BoardsService();
+        private BoardsService _boardsService;
 
         [ObservableProperty] private ObservableCollection<Board> _boardList;
         [ObservableProperty] private Board? _newBoard;
-        public MainViewModel()
+        public MainViewModel(BoardsService boardsService)
         {
+            _boardsService = boardsService;
             BoardList = new ObservableCollection<Board>();
             GetBoard();
         }
