@@ -23,12 +23,18 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<BoardPage>();
+        builder.Services.AddTransient<CreateBoardPage>();
+        builder.Services.AddTransient<CreateCategoryPage>();
+        builder.Services.AddTransient<CreateTaskPage>();
         builder.Services.AddTransient<SignupPage>();
 
         // Viewmodel DI
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<BoardViewModel>();
+        builder.Services.AddTransient<CreateBoardViewModel>();
+        builder.Services.AddTransient<CreateCategoryViewModel>();
+        builder.Services.AddTransient<CreateTaskViewModel>();
         builder.Services.AddTransient<SignupViewModel>();
 
         // Service DI
