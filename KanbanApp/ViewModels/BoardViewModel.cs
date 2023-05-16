@@ -10,13 +10,15 @@ namespace KanbanApp.ViewModels
     [QueryProperty(nameof(CurrentBoard), "board")]
     public partial class BoardViewModel : ObservableObject
     {
+        private readonly CategoryService _categoryService;
+        private readonly MemberService _memberService;
         [ObservableProperty] private Board _currentBoard;
         [ObservableProperty] private ObservableCollection<Category> _categories;
         [ObservableProperty] private bool _isRefreshing;
-        private readonly CategoryService _categoryService;
-        public BoardViewModel(CategoryService categoryService)
+        public BoardViewModel(CategoryService categoryService, MemberService memberService)
         {
             _categoryService = categoryService;
+            _memberService = memberService;
             Categories = new ObservableCollection<Category>();
         }
         public async void BackButton()
@@ -47,11 +49,11 @@ namespace KanbanApp.ViewModels
         }
         async partial void OnCurrentBoardChanged(Board value)
         {
+            value.Members = await _memberService.GetMembershipsByBoard(value.Id);
             var cat = await _categoryService.GetCategoriesByBoard(value.Id);
             foreach (var category in cat) { Categories.Add(category); }
             value.Categories = Categories;
         }
-
         [RelayCommand]
         public async Task InviteButton()
         {

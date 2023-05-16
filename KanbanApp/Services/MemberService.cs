@@ -14,6 +14,13 @@ namespace KanbanApp.Services
             return result;
         }
 
+        public async Task<Member[]> GetMembershipsByBoard(int boardId)
+        {
+            var path = $"{_apiPath}/board/{boardId}";
+            var result = await GetData<Member[]>(path);
+            return result;
+        }
+
         public async Task<Member> CreateMembership(Member member)
         {
             var result = await PostData(member, _apiPath);
