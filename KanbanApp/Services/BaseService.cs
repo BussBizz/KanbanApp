@@ -44,6 +44,8 @@ public class BaseService
     {
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = await GetAuth();
+
             var requestUri = GetUri(apiPath);
 
             var scontent = JsonConvert.SerializeObject(data);
@@ -69,6 +71,8 @@ public class BaseService
     {
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = await GetAuth();
+
             var requestUri = GetUri(apiPath);
 
             HttpContent content =
@@ -94,6 +98,8 @@ public class BaseService
     {
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = await GetAuth();
+
             var requestUri = GetUri(apiPath);
 
             var result = await _httpClient.DeleteAsync(requestUri);

@@ -13,11 +13,10 @@ public partial class BoardPage : ContentPage
         _vm = vm;
         BindingContext = _vm;
     }
+
     protected override bool OnBackButtonPressed()
     {
         _vm.BackButton();
         return true;
     }
-
-    
 }

@@ -7,26 +7,29 @@ using System.Collections.ObjectModel;
 
 namespace KanbanApp.ViewModels
 {
-    [QueryProperty(nameof(NewBoard), "newBoard")]
+    //[QueryProperty(nameof(NewBoard), "newBoard")]
     public partial class MainViewModel : ObservableObject
     {
-        private BoardsService _boardsService;
+        //private BoardsService _boardsService;
+        private MemberService _memberService;
 
-        [ObservableProperty] private ObservableCollection<Board> _boardList;
-        [ObservableProperty] private Board? _newBoard;
-        public MainViewModel(BoardsService boardsService)
+        [ObservableProperty] private ObservableCollection<Member> _membershipList;
+        //[ObservableProperty] private Board? _newBoard;
+        public MainViewModel(BoardsService boardsService, MemberService memberService)
         {
-            _boardsService = boardsService;
-            BoardList = new ObservableCollection<Board>();
-            GetBoard();
+            //_boardsService = boardsService;
+            _memberService = memberService;
+            MembershipList = new ObservableCollection<Member>();
+            GetMemberships();
         }
 
-        private async void GetBoard()
+        private async void GetMemberships()
         {
-            var result = await _boardsService.GetBoards();
-            foreach (var board in result)
+            var userId = await SecureStorage.GetAsync("userId");
+            var result = await _memberService.GetMembershipsByUser(int.Parse(userId));
+            foreach (var membership in result)
             {
-                BoardList.Add(board);
+                MembershipList.Add(membership);
             }
         }
         [RelayCommand]
@@ -38,16 +41,17 @@ namespace KanbanApp.ViewModels
         [RelayCommand]
         public async Task GoToCreateBoard()
         {
-            await Shell.Current.GoToAsync(nameof(CreateBoardPage));
+            var param = new Dictionary<string, object> { { "memberships", MembershipList } };
+            await Shell.Current.GoToAsync(nameof(CreateBoardPage), param);
         }
 
-        partial void OnNewBoardChanged(Board value)
-        {
-            if (value != null && !BoardList.Any(board => board.Id == value.Id))
-            {
-                BoardList.Add(value);
-            }
-            NewBoard = null;
-        }
+        //partial void OnNewBoardChanged(Board value)
+        //{
+        //    if (value != null && !BoardList.Any(board => board.Id == value.Id))
+        //    {
+        //        BoardList.Add(value);
+        //    }
+        //    NewBoard = null;
+        //}
     }
 }

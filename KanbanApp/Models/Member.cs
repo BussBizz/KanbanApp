@@ -20,5 +20,13 @@
         public ICollection<KanbanTask> TasksCreated { get; set;} = null!;
         public ICollection<Comment> Comments { get; set; } = null!;
         public ICollection<Category> Categories { get; set; } = null!;
+
+        public Member()
+        {
+            TasksAssigned = new List<KanbanTask>();
+            TasksCreated = new List<KanbanTask>();
+            Comments = new List<Comment>();
+            Categories = new List<Category>();
+        }
     }
 }
