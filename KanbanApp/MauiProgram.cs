@@ -28,6 +28,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CreateTaskPage>();
         builder.Services.AddTransient<SignupPage>();
         builder.Services.AddTransient<InvitePage>();
+        builder.Services.AddTransient<UserInvitesPage>();
 
         // Viewmodel DI
         builder.Services.AddTransient<LoginViewModel>();
@@ -38,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CreateTaskViewModel>();
         builder.Services.AddTransient<SignupViewModel>();
         builder.Services.AddTransient<InviteViewModel>();
+        builder.Services.AddTransient<UserInvitesViewModel>();
 
         // Service DI
         builder.Services.AddTransient<BoardsService>();

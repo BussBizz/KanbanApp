@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KanbanApp.Pages.UserInvitesPage"
+             xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
+             x:DataType="viewmodel:UserInvitesViewModel"
+             xmlns:model="clr-namespace:KanbanApp.Models">
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding InviteList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Invite}">
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding Board.Titel}"/>
+                        <Label Text="{Binding Expire, StringFormat='Udløber: {0:MM} {0:dd}, {0:hh}:{0:mm}'}"/>
+                        <Button Text="Accepter"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserInvitesViewModel}}, Path=AcceptInviteCommand}"
+                                CommandParameter="{Binding .}"/>
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <HorizontalStackLayout>
+            <Label Text="Invitations code: "/>
+            <Entry Text="{Binding InviteCode}"/>
+            <Button Text="Aktiver" Command="{Binding TryCodeCommand}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

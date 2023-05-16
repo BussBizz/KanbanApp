@@ -7,20 +7,24 @@ using System.Collections.ObjectModel;
 
 namespace KanbanApp.ViewModels
 {
-    //[QueryProperty(nameof(NewBoard), "newBoard")]
     public partial class MainViewModel : ObservableObject
     {
-        //private BoardsService _boardsService;
         private MemberService _memberService;
+        private InviteService _inviteService;
 
         [ObservableProperty] private ObservableCollection<Member> _membershipList;
-        //[ObservableProperty] private Board? _newBoard;
-        public MainViewModel(BoardsService boardsService, MemberService memberService)
+
+        [ObservableProperty] private ObservableCollection<Invite> _inviteList;
+        [ObservableProperty] private string _inviteButton;
+
+        public MainViewModel(MemberService memberService, InviteService inviteService)
         {
-            //_boardsService = boardsService;
             _memberService = memberService;
+            _inviteService = inviteService;
             MembershipList = new ObservableCollection<Member>();
+            InviteList = new ObservableCollection<Invite>();
             GetMemberships();
+            GetInvites();
         }
 
         private async void GetMemberships()
@@ -32,26 +36,37 @@ namespace KanbanApp.ViewModels
                 MembershipList.Add(membership);
             }
         }
+
+        private async void GetInvites()
+        {
+            var userId = await SecureStorage.GetAsync("userId");
+            var result = await _inviteService.GetInvitesByUser(int.Parse(userId));
+            foreach (var invite in result)
+            {
+                InviteList.Add(invite);
+            }
+            InviteButton = $"Invitationer ({InviteList.Count})";
+        }
+
+        [RelayCommand]
+        public async Task GoToInvites()
+        {
+            var param = new Dictionary<string, object> { { "invites", InviteList }, { "memberships", MembershipList } };
+            await Shell.Current.GoToAsync(nameof(UserInvitesPage), param);
+        }
+
         [RelayCommand]
         public async Task GoToBoard(Board board)
         {
             var param = new Dictionary<string, object> { { "board", board } };
             await Shell.Current.GoToAsync(nameof(BoardPage), param);
         }
+
         [RelayCommand]
         public async Task GoToCreateBoard()
         {
             var param = new Dictionary<string, object> { { "memberships", MembershipList } };
             await Shell.Current.GoToAsync(nameof(CreateBoardPage), param);
         }
-
-        //partial void OnNewBoardChanged(Board value)
-        //{
-        //    if (value != null && !BoardList.Any(board => board.Id == value.Id))
-        //    {
-        //        BoardList.Add(value);
-        //    }
-        //    NewBoard = null;
-        //}
     }
 }

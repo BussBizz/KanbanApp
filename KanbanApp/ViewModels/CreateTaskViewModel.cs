@@ -26,7 +26,7 @@ namespace KanbanApp.ViewModels
             {
                 //TODO Set as logged in user
                 NewKanbanTask.CreatorId = 1;
-                NewKanbanTask.CatergoryId = Category.Id;
+                NewKanbanTask.CategoryId = Category.Id;
                 var newKanbanTask = await _tasksService.PostTask(NewKanbanTask);
                 Category.KanbanTasks.Add(newKanbanTask);
                 var param = new Dictionary<string, object> { { "task", newKanbanTask } };

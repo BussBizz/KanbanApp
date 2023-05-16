@@ -11,7 +11,7 @@
     <ScrollView>
         <StackLayout
             Spacing="25">
-            <Border Padding="0,10" >
+            <!--<Border Padding="0,10" >-->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
                     <Button
                         Text="Indstillinger"
@@ -21,14 +21,12 @@
                         Clicked="OnNavigateToSettings"
                         />
                     <Button
-                        x:Name="update"
-                        Text="Opdater"
+                        Text="{Binding InviteButton}"
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
-                        />
+                        Command="{Binding GoToInvitesCommand}"/>
                     <Button
-                        x:Name="add"
                         Text="Nyt board"
                         Padding="10"
                         CornerRadius="10"
@@ -36,7 +34,7 @@
                         Command="{Binding GoToCreateBoardCommand}"
                         />
                 </HorizontalStackLayout>
-            </Border>
+            <!--</Border>-->
             <CollectionView ItemsSource="{Binding MembershipList}">
                 <CollectionView.HeaderTemplate>
                     <DataTemplate >
