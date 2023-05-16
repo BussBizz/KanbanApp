@@ -1,10 +1,5 @@
 ﻿using KanbanApp.Models;
 using KantineApp.BL.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KanbanApp.Services
 {
@@ -22,6 +17,18 @@ namespace KanbanApp.Services
         public async Task<Member> CreateMembership(Member member)
         {
             var result = await PostData(member, _apiPath);
+            return result;
+        }
+
+        public async Task<Member> MembershipFromInvite(Invite invite)
+        {
+            var member = new Member
+            {
+                BoardId = invite.BoardId,
+                UserId = invite.UserId.Value,
+            };
+            var result = await PostData(member, _apiPath);
+            result.Board = invite.Board;
             return result;
         }
     }

@@ -46,6 +46,27 @@ namespace KanbanApp.Services
             return result;
         }
 
+        public async Task<Invite[]> GetInvitesByUser(int userId)
+        {
+            var path = $"{_apiPath}/user/{userId}";
+            var result = await GetData<Invite[]>(path);
+            return result;
+        }
+
+        public async Task<Invite> GetInviteByCode(string code)
+        {
+            var path = $"{_apiPath}/code/{code}";
+            var result = await GetData<Invite>(path);
+            return result;
+        }
+
+        public async Task<Invite> DeleteInvite(Invite invite)
+        {
+            var path = $"{_apiPath}/{invite.Id}";
+            var result = await DeleteData<Invite>(path);
+            return result;
+        }
+
         private string RandomString(int length = 6)
         {
             const string pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
