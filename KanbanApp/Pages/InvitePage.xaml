@@ -4,11 +4,28 @@
              x:Class="KanbanApp.Pages.InvitePage"
              Title="InvitePage"
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
-             x:DataType="viewmodel:InviteViewModel">
+             x:DataType="viewmodel:InviteViewModel"
+             xmlns:model="clr-namespace:KanbanApp.Models">
     <VerticalStackLayout>
         <Entry Text="{Binding Username}"/>
         <Label Text="{Binding UsernameStatus}" TextColor="Red"/>
         <Button Text="{Binding InviteButton}"
+                IsEnabled="{Binding InviteButtonEnabled}"
                 Command="{Binding CreateInviteCommand}"/>
+        <CollectionView ItemsSource="{Binding Invites}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Invite}">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="{Binding User.Name, FallbackValue='Kode:', StringFormat='Bruger:'}"/>
+                        <Label Text="{Binding Code, FallbackValue=''}" />
+                        <Label Text="{Binding User.Name, FallbackValue=''}"/>
+                        <Label Text="{Binding Expire, StringFormat='Udløber: {0:dd}/{0:MM} - {0:hh}:{0:mm}:{0:ss}'}"/>
+                        <Button Text="Slet"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:InviteViewModel}}, Path=DeleteInviteCommand}"
+                                CommandParameter="{Binding .}"/>
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

@@ -34,8 +34,9 @@ namespace KanbanApp.Services
                 UserId = user.Id,
                 Expire = DateTime.Now.AddDays(2),
             };
-
+            
             var result = await PostData(invite, _apiPath);
+            result.User = user;
             return result;
         }
 
