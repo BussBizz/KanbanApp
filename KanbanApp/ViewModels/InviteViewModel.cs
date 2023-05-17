@@ -10,7 +10,6 @@ namespace KanbanApp.ViewModels
     public partial class InviteViewModel : ObservableObject
     {
         private readonly InviteService _inviteService;
-        private readonly LoginService _loginService;
         private readonly UserService _userService;
 
         [ObservableProperty] private Board _currentBoard;
@@ -22,10 +21,9 @@ namespace KanbanApp.ViewModels
 
         private bool _anon = true;
 
-        public InviteViewModel(InviteService inviteService, LoginService loginService, UserService userService)
+        public InviteViewModel(InviteService inviteService, UserService userService)
         {
             _inviteService = inviteService;
-            _loginService = loginService;
             _userService = userService;
             InviteButton = "Inviter ven";
             Invites = new ObservableCollection<Invite>();
@@ -66,7 +64,7 @@ namespace KanbanApp.ViewModels
 
         async partial void OnUsernameChanged(string value)
         {
-            _anon = string.IsNullOrEmpty(value) ? true : !await _loginService.CheckUserName(value);
+            _anon = string.IsNullOrEmpty(value) ? true : !await _userService.CheckUserName(value);
             if (_anon)
             {
                 UsernameStatus = "Brugeren findes ikke, inviter anonym bruger";

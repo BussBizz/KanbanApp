@@ -8,7 +8,6 @@ namespace KanbanApp.ViewModels
     public partial class SignupViewModel : ObservableObject
     {
         private readonly UserService _userService;
-        private readonly LoginService _loginService;
 
         [ObservableProperty]
         private Password _newLogin;
@@ -22,10 +21,9 @@ namespace KanbanApp.ViewModels
         [ObservableProperty]
         private string _nameStatusText;
 
-        public SignupViewModel(UserService userService, LoginService loginService)
+        public SignupViewModel(UserService userService)
         {
             _userService = userService;
-            _loginService = loginService;
             NewLogin = new Password();
         }
 
@@ -57,7 +55,7 @@ namespace KanbanApp.ViewModels
             if (NewLogin.User.Name == UserName || UserName == String.Empty) return;
 
             NewLogin.User.Name = UserName;
-            NameTakenStatus = await _loginService.CheckUserName(NewLogin.User.Name);
+            NameTakenStatus = await _userService.CheckUserName(NewLogin.User.Name);
         }
 
         partial void OnNameTakenStatusChanged(bool value)

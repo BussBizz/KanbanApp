@@ -39,6 +39,11 @@
                 Margin="90,20,90,0"
                 Text="Ny bruger"
                 Clicked="OnNewUserClicked" />
+            <HorizontalStackLayout>
+                <Entry Text="{Binding Code}"/>
+                <Button Text="Deltag"
+                        Command="{Binding CodeLoginCommand}"/>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
 
 
