@@ -126,8 +126,8 @@ public class BaseService
 
     private async Task<AuthenticationHeaderValue> GetAuth()
     {
-        var auth = await SecureStorage.GetAsync("creds");
+        var auth = await SecureStorage.GetAsync("token");
 
-        return new AuthenticationHeaderValue("Basic", auth);
+        return new AuthenticationHeaderValue("Bearer", auth);
     }
 }

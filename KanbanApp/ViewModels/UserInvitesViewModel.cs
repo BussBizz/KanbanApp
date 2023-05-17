@@ -44,6 +44,12 @@ namespace KanbanApp.ViewModels
             var invite = await _inviteService.GetInviteByCode(InviteCode);
             if (invite != null)
             {
+                var membership = MembershipList.FirstOrDefault(m => m.BoardId == invite.BoardId);
+                if (membership != null)
+                {
+                    await Shell.Current.DisplayAlert("Slap dog af...", $"Du er allerede medlem af {membership.Board.Titel}", "Ok ;(");
+                    return;
+                }
                 var userId = await SecureStorage.GetAsync("userId");
                 invite.UserId = int.Parse(userId);
                 await AcceptInvite(invite);

@@ -10,62 +10,92 @@ namespace KanbanApp.ViewModels
     [QueryProperty(nameof(Username), "username")]
     public partial class LoginViewModel : ObservableObject
     {
-        private readonly LoginService _loginService;
+        private readonly AuthService _loginService;
+        private readonly InviteService _inviteService;
+        private readonly MemberService _memberService;
+        private readonly UserService _userService;
 
-        [ObservableProperty]
-        private string _username;
+        [ObservableProperty] private string _username;
+        [ObservableProperty] private string _password;
+        [ObservableProperty] private string _code;
 
-        [ObservableProperty]
-        private string _password;
-
-        public LoginViewModel(LoginService loginService)
+        public LoginViewModel(AuthService loginService, InviteService inviteService, MemberService memberService, UserService userService)
         {
             _loginService = loginService;
-            LoginAttempt();
+            _inviteService = inviteService;
+            _memberService = memberService;
+            _userService = userService;
+            TokenLogin();
+        }
+
+        partial void OnCodeChanged(string value)
+        {
+            Code = value.ToUpper();
+        }
+
+        [RelayCommand]
+        public async Task CodeLogin()
+        {
+            var invite = await _inviteService.GetInviteByCode(Code);
+            if (invite == null)
+            {
+                await Shell.Current.DisplayAlert("Kunne ikke finde invitation", $"Ingen invitaion med kode: {Code}", "Ok");
+                return;
+            }
+
+            var member = new Member { BoardId = invite.BoardId };
+            var user = new User { Name = "Anon-" + Code, Memberships = { member } };
+            var password = Guid.NewGuid().ToString();
+
+            await _userService.CreateUser(new Models.Password { Hash = password, User = user });
+            await _inviteService.DeleteInvite(invite);
+
+            Username = user.Name;
+            Password = password;
+
+            await Login();
+        }
+
+        private async Task TokenLogin()
+        {
+            var token = await SecureStorage.GetAsync("token");
+
+            if (!string.IsNullOrEmpty(token))
+                if (await _loginService.Login(token))
+                    await Shell.Current.GoToAsync(nameof(MainPage));
         }
 
         [RelayCommand]
         public async Task Login()
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
-            {
-                await Shell.Current.DisplayAlert("Manglende info", "Indtast brugernavn og kodeord.", "Ok");
-                return;
-            }
-
-            var auth = Encoding.UTF8.GetBytes($"{Username}:{Password}");
-
-            var test = Convert.ToBase64String(auth);
-
-            await SecureStorage.SetAsync("creds", test);
-            await SecureStorage.SetAsync("username", Username);
-
-            await LoginAttempt();
-        }
-
-        private async Task LoginAttempt()
-        {
-            var username = await SecureStorage.GetAsync("username") ?? Username;
-            if (string.IsNullOrEmpty(username)) return;
-
-            User? user = null;
             try
             {
-                user = await _loginService.Login(username);
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+                {
+                    await Shell.Current.DisplayAlert("Manglende info", "Indtast brugernavn og kodeord.", "Ok");
+                    return;
+                }
+
+                var user = await _loginService.Login(Username, Password);
+                if (user == null)
+                {
+                    await Shell.Current.DisplayAlert("Fejl", "Fokert brugernavn og kodeord.", "Ok");
+                    return;
+                }
+
+                await SecureStorage.SetAsync("userId", user.Id.ToString());
+                await SecureStorage.SetAsync("username", user.Name);
+
+                await Shell.Current.GoToAsync(nameof(MainPage));
+            }
+            catch (HttpRequestException)
+            {
+                await Shell.Current.DisplayAlert("Der skete en fejl.", $"Ingen forbindelse til serveren, ring til Sigurd :)", "Ok");
             }
             catch (Exception e)
             {
-                await Shell.Current.DisplayAlert("Fejl", e.Message, "Ok");
+                await Shell.Current.DisplayAlert("Der skete en fejl.", $"Fejlbesked: {e.Message}", "Ok");
             }
-
-            if (user == null)
-            {
-                SecureStorage.RemoveAll();
-                return;
-            }
-
-            await SecureStorage.SetAsync("userId", user.Id.ToString());
-            await Shell.Current.GoToAsync(nameof(MainPage));
         }
     }
 }

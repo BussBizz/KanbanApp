@@ -25,5 +25,12 @@ namespace KanbanApp.Services
             return result;
         }
 
+        public async Task<bool> CheckUserName(string username)
+        {
+            var path = $"{apiPath}/check/{username}";
+            var result = await GetData<bool>(path);
+            return result;
+        }
+
     }
 }
