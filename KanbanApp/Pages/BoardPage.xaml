@@ -30,23 +30,28 @@
             </HorizontalStackLayout>
         </Border>
         <CollectionView ItemsSource="{Binding Categories}" >
-            <CollectionView.HeaderTemplate>
-                <DataTemplate >
-                    <Label FontSize="Header" Text="Boards"/>
-                </DataTemplate>
-            </CollectionView.HeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Category}">
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Title}"/>
-                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToCreateTaskCommand}"
+                    <Border >
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Title}" FontSize="Subtitle"/>
+                                <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToCreateTaskCommand}"
                                     CommandParameter="{Binding .}" Text="+" Padding="5,0" Margin="10,2,2,2"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Margin="10">
-                            <Label Text="{Binding KanbanTasks.Count}"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <CollectionView ItemsSource="{Binding KanbanTasks}" >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Type model:KanbanTask}">
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Title}"/>
+                                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToTaskPageCommand}"
+                                                        CommandParameter="{Binding .}" Text="Åben" Padding="5,0" Margin="10,2,2,2"/>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

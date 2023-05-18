@@ -24,8 +24,8 @@ namespace KanbanApp.ViewModels
         {
             try
             {
-                //TODO Set as logged in user
-                NewKanbanTask.CreatorId = 1;
+                var userId = int.Parse(await SecureStorage.GetAsync("userId"));
+                NewKanbanTask.CreatorId = userId;
                 NewKanbanTask.CategoryId = Category.Id;
                 var newKanbanTask = await _tasksService.PostTask(NewKanbanTask);
                 Category.KanbanTasks.Add(newKanbanTask);

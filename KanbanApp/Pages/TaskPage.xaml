@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KanbanApp.Pages.TaskPage"
+             xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
+             x:DataType="viewmodel:TaskViewModel"
+             xmlns:model="clr-namespace:KanbanApp.Models"
+             Title="{Binding CurrentTask.Title}">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" >
+            <Label MaxLines="10" Text="{Binding Description}"/>
+            <Label MaxLines="1" Text="{Binding Deadline}"/>
+            <Label Text="{Binding Creator}"/>
+            <Label Text="{Binding Assigned}"/>
+            <Label Text="Kommentare:" FontSize="Medium"/>
+            <CollectionView ItemsSource="{Binding Comments}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Comment}">
+                        <Frame>
+                            <VerticalStackLayout Spacing="4" >
+                                <Label Text="{Binding Member.User.Name}" FontSize="Subtitle"/>
+                                <Label Text="{Binding Content}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Frame >
+                <VerticalStackLayout>
+                    <Editor Text="{Binding NewComment.Content}" Placeholder="Skriv en kommentar..." HeightRequest="200" WidthRequest="400"/>
+                    <Button Text="Send" WidthRequest="100" Margin="0,5,0,0" Command="{Binding CreateCommentCommand}"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

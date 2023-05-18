@@ -30,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddTransient<InvitePage>();
         builder.Services.AddTransient<UserInvitesPage>();
         builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<TaskPage>();
 
         // Viewmodel DI
         builder.Services.AddTransient<LoginViewModel>();
@@ -41,6 +42,7 @@ public static class MauiProgram
         builder.Services.AddTransient<SignupViewModel>();
         builder.Services.AddTransient<InviteViewModel>();
         builder.Services.AddTransient<UserInvitesViewModel>();
+        builder.Services.AddTransient<TaskViewModel>();
 
         // Service DI
         builder.Services.AddTransient<BoardsService>();
@@ -49,6 +51,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CategoryService>();
         builder.Services.AddTransient<MemberService>();
         builder.Services.AddTransient<InviteService>();
+        builder.Services.AddTransient<CommentsService>();
 
         return builder.Build();
     }
