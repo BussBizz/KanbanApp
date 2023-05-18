@@ -7,8 +7,8 @@ namespace KantineApp.BL.Services;
 public class BaseService
 {
     private HttpClient _httpClient;
-    //private string _host = "https://6378-2-111-92-213.ngrok-free.app";
-    private string _host = "https://localhost:7126";
+    private string _host = "https://891a-2-111-92-213.ngrok-free.app";
+    //private string _host = "https://localhost:7126";
 
     public BaseService()
     {

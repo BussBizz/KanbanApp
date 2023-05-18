@@ -5,11 +5,11 @@ namespace KanbanApp;
 public partial class SettingsPage : ContentPage
 {
     private readonly AuthService _authService;
-	public SettingsPage(AuthService authService)
-	{
-		InitializeComponent();
+    public SettingsPage(AuthService authService)
+    {
+        InitializeComponent();
         _authService = authService;
-	}
+    }
 
     private async void OnLogoutClick(object sender, EventArgs e)
     {

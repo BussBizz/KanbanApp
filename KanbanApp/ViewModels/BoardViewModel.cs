@@ -42,6 +42,14 @@ namespace KanbanApp.ViewModels
             await Shell.Current.GoToAsync(nameof(CreateTaskPage), param);
         }
         [RelayCommand]
+        public async Task GoToTaskPage(KanbanTask kanbanTask)
+        {
+            var userId = await SecureStorage.GetAsync("userId");
+            var member = CurrentBoard.Members.FirstOrDefault(m => m.UserId == int.Parse((userId)));
+            var param = new Dictionary<string, object> { { "currentTask", kanbanTask }, { "currentMember", member } };
+            await Shell.Current.GoToAsync(nameof(TaskPage), param);
+        }
+        [RelayCommand]
         public async Task GoToCreateCategory()
         {
             var param = new Dictionary<string, object> { { "board", CurrentBoard } };
@@ -50,8 +58,8 @@ namespace KanbanApp.ViewModels
         async partial void OnCurrentBoardChanged(Board value)
         {
             value.Members = await _memberService.GetMembershipsByBoard(value.Id);
-            var cat = await _categoryService.GetCategoriesByBoard(value.Id);
-            foreach (var category in cat) { Categories.Add(category); }
+            var categories = await _categoryService.GetCategoriesByBoard(value.Id);
+            foreach (var category in categories) { Categories.Add(category); }
             value.Categories = Categories;
         }
         [RelayCommand]
