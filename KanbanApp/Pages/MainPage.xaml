@@ -11,8 +11,8 @@
     <ScrollView>
         <StackLayout
             Spacing="25">
-            <!--<Border Padding="0,10" >-->
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+            <Border Padding="0,10" >
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                     <Button
                         Text="Indstillinger"
                         Padding="10"
@@ -34,23 +34,30 @@
                         Command="{Binding GoToCreateBoardCommand}"
                         />
                 </HorizontalStackLayout>
-            <!--</Border>-->
-            <CollectionView ItemsSource="{Binding MembershipList}">
-                <CollectionView.HeaderTemplate>
-                    <DataTemplate >
-                        <Label FontSize="Header" Text="Boards"/>
-                    </DataTemplate>
-                </CollectionView.HeaderTemplate>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:Member}">
-                        <FlexLayout WidthRequest="100" HeightRequest="50" JustifyContent="Center" HorizontalOptions="Center">
-                            <Label Text="{Binding Board.Titel}"/>
-                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=GoToBoardCommand}"
-                                    CommandParameter="{Binding Board}" Text="Go"/>
-                        </FlexLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            </Border>
+            <VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding MembershipList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:Member}">
+                            <Border StrokeShape="RoundRectangle 10,10,10,10" Margin="20,15">
+                                <VerticalStackLayout Padding="20">
+                                    <Label Text="{Binding Board.Titel}" 
+                                           VerticalTextAlignment="Center" 
+                                           HorizontalTextAlignment="Center"  
+                                           FontSize="Title" 
+                                           FontAttributes="Bold" 
+                                           Margin="20,0,0,0"/>
+                                    <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=GoToBoardCommand}"
+                                    CommandParameter="{Binding Board}" 
+                                            Text="Gå til board" 
+                                            Margin="20,10,0,0"
+                                            WidthRequest="150"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>
