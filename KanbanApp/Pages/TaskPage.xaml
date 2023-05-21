@@ -12,11 +12,12 @@
             <Label MaxLines="1" Text="{Binding Deadline}"/>
             <Label Text="{Binding Creator}"/>
             <Label Text="{Binding Assigned}"/>
+            <Label Text="STATUS"/>
             <Label Text="Kommentare:" FontSize="Medium"/>
             <CollectionView ItemsSource="{Binding Comments}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:Comment}">
-                        <Frame>
+                        <Frame Margin="10,5,10,0" Padding="10">
                             <VerticalStackLayout Spacing="4" >
                                 <Label Text="{Binding Member.User.Name}" FontSize="Subtitle"/>
                                 <Label Text="{Binding Content}"/>
@@ -25,9 +26,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Frame >
+            <Frame Margin="10">
                 <VerticalStackLayout>
-                    <Editor Text="{Binding NewComment.Content}" Placeholder="Skriv en kommentar..." HeightRequest="200" WidthRequest="400"/>
+                    <Editor Text="{Binding NewComment.Content}" Placeholder="Skriv en kommentar..." />
                     <Button Text="Send" WidthRequest="100" Margin="0,5,0,0" Command="{Binding CreateCommentCommand}"/>
                 </VerticalStackLayout>
             </Frame>

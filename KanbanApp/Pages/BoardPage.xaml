@@ -8,19 +8,13 @@
              xmlns:model="clr-namespace:KanbanApp.Models">
     <VerticalStackLayout>
         <Border Padding="0,10" >
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Button
                         Text="Inviter brugere"
                         Padding="10"
                         CornerRadius="10"
                         FontAttributes="Bold"
                         Command="{Binding InviteButtonCommand}"/>
-                <!--<Button
-                        Text="Ny Opgave"
-                        Padding="10"
-                        CornerRadius="10"
-                        FontAttributes="Bold"
-                        />-->
                 <Button
                         Text="Ny Kategori"
                         Padding="10"
@@ -32,26 +26,26 @@
         <CollectionView ItemsSource="{Binding Categories}" >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Category}">
-                    <Border >
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding Title}" FontSize="Subtitle"/>
-                                <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToCreateTaskCommand}"
-                                    CommandParameter="{Binding .}" Text="+" Padding="5,0" Margin="10,2,2,2"/>
-                            </HorizontalStackLayout>
-                            <CollectionView ItemsSource="{Binding KanbanTasks}" >
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="{x:Type model:KanbanTask}">
-                                        <HorizontalStackLayout>
-                                            <Label Text="{Binding Title}"/>
+                    <VerticalStackLayout Spacing="10" Margin="0,15,0,0">
+                        <HorizontalStackLayout Padding="5,0,0,0">
+                            <Label Text="{Binding Title}" FontSize="Title" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+                            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToCreateTaskCommand}"
+                                    CommandParameter="{Binding .}" Text="Tilføj opgave"  Margin="10,2,2,2"/>
+                        </HorizontalStackLayout>
+                        <CollectionView ItemsSource="{Binding KanbanTasks}" >
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type model:KanbanTask}">
+                                    <Border StrokeShape="RoundRectangle 10,10,10,10" Margin="20,15,20,0" Padding="5" >
+                                        <VerticalStackLayout Margin="20,0,0,5" Spacing="10" HorizontalOptions="Center">
+                                            <Label Text="{Binding Title}" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                             <Button Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BoardViewModel}},Path=GoToTaskPageCommand}"
-                                                        CommandParameter="{Binding .}" Text="Åben" Padding="5,0" Margin="10,2,2,2"/>
-                                        </HorizontalStackLayout>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </VerticalStackLayout>
-                    </Border>
+                                                        CommandParameter="{Binding .}" Text="Detaljer" WidthRequest="150"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
