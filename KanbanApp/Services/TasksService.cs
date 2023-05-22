@@ -16,6 +16,7 @@ namespace KanbanApp.Services
             var result = await GetData<KanbanTask[]>(_apiPath);
             return result;
         }
+
         public async Task<KanbanTask> GetTask(int id)
         {
             var path = $"{_apiPath}/{id}";
@@ -27,6 +28,31 @@ namespace KanbanApp.Services
         {
             var result = await PostData(kanbanTask, _apiPath);
             return result;
+        }
+
+        public async Task<KanbanTask> CompleteTask(KanbanTask kanbanTask, Member member)
+        {
+            var path = $"{_apiPath}/{kanbanTask.Id}/complete/{member.Id}";
+            var result = await GetData<KanbanTask>(path);
+            kanbanTask.TaskCompleted = true;
+            kanbanTask.CompletedById = member.Id;
+            kanbanTask.CompletedBy = member;
+            return result;
+        }
+
+        public async Task<KanbanTask> AssignTask(KanbanTask kanbanTask, Member member)
+        {
+            var path = $"{_apiPath}/{kanbanTask.Id}/assign/{member.Id}";
+            var result = await GetData<KanbanTask>(path);
+            kanbanTask.AssignedId = member.Id;
+            kanbanTask.Assigned = member;
+            return result;
+        }
+
+        public async Task DeleteTask(KanbanTask kanbanTask)
+        {
+            var path = $"{_apiPath}/{kanbanTask.Id}";
+            await DeleteData(path);
         }
     }
 }

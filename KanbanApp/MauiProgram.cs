@@ -1,5 +1,6 @@
 ﻿namespace KanbanApp;
 
+using KanbanApp.Models;
 using KanbanApp.Pages;
 using KanbanApp.Services;
 using KanbanApp.ViewModels;
@@ -31,6 +32,7 @@ public static class MauiProgram
         builder.Services.AddTransient<UserInvitesPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<TaskPage>();
+        builder.Services.AddTransient<AdminPage>();
 
         // Viewmodel DI
         builder.Services.AddTransient<LoginViewModel>();
@@ -43,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddTransient<InviteViewModel>();
         builder.Services.AddTransient<UserInvitesViewModel>();
         builder.Services.AddTransient<TaskViewModel>();
+        builder.Services.AddTransient<AdminViewModel>();
 
         // Service DI
         builder.Services.AddTransient<BoardsService>();
@@ -52,6 +55,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MemberService>();
         builder.Services.AddTransient<InviteService>();
         builder.Services.AddTransient<CommentsService>();
+        builder.Services.AddTransient<TasksService>();
 
         return builder.Build();
     }

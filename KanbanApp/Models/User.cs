@@ -7,8 +7,8 @@
         public bool IsAnon { get; set; } = true;
 
         // Collection prop
-        public ICollection<Board> Boards { get; set; } = null!;
-        public ICollection<Member> Memberships { get; set; } = null!;
+        public List<Board> Boards { get; set; } = null!;
+        public List<Member> Memberships { get; set; } = null!;
 
         public User()
         {

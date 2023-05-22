@@ -9,14 +9,8 @@ public partial class BoardPage : ContentPage
 
     public BoardPage(BoardViewModel vm)
     {
-        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
-    }
-
-    protected override bool OnBackButtonPressed()
-    {
-        _vm.BackButton();
-        return true;
+        InitializeComponent();
     }
 }

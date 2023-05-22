@@ -12,56 +12,64 @@ namespace KanbanApp.ViewModels
     {
         private readonly CategoryService _categoryService;
         private readonly MemberService _memberService;
+        private readonly TasksService _tasksService;
         [ObservableProperty] private Board _currentBoard;
         [ObservableProperty] private ObservableCollection<Category> _categories;
-        [ObservableProperty] private bool _isRefreshing;
-        public BoardViewModel(CategoryService categoryService, MemberService memberService)
+        [ObservableProperty] private Member _currentMember;
+        public BoardViewModel(CategoryService categoryService, MemberService memberService, TasksService tasksService)
         {
             _categoryService = categoryService;
             _memberService = memberService;
+            _tasksService = tasksService;
             Categories = new ObservableCollection<Category>();
         }
-        public async void BackButton()
-        {
-            foreach (var page in Shell.Current.Navigation.NavigationStack)
-            {
-                if (page != null && (page.GetType() == typeof(CreateBoardPage)))
-                {
-                    Shell.Current.Navigation.RemovePage(page);
-                    break;
-                }
-            }
-            var param = new Dictionary<string, object> { { "newBoard", CurrentBoard } };
-
-            await Shell.Current.GoToAsync("..", param);
-        }
+       
         [RelayCommand]
         public async Task GoToCreateTask(Category category)
         {
-            var param = new Dictionary<string, object> { { "category", category } };
+            var param = new Dictionary<string, object> { { "category", category }, { "currentMember", CurrentMember } };
             await Shell.Current.GoToAsync(nameof(CreateTaskPage), param);
         }
+
         [RelayCommand]
         public async Task GoToTaskPage(KanbanTask kanbanTask)
         {
-            var userId = await SecureStorage.GetAsync("userId");
-            var member = CurrentBoard.Members.FirstOrDefault(m => m.UserId == int.Parse((userId)));
-            var param = new Dictionary<string, object> { { "currentTask", kanbanTask }, { "currentMember", member } };
+            var param = new Dictionary<string, object> { { "currentTask", kanbanTask }, { "currentMember", CurrentMember }, { "board", CurrentBoard } };
             await Shell.Current.GoToAsync(nameof(TaskPage), param);
         }
+
+        [RelayCommand]
+        public async Task DeleteTask(KanbanTask kanbanTask)
+        {
+            await _tasksService.DeleteTask(kanbanTask);
+            CurrentBoard.Categories.FirstOrDefault(c => c.Id == kanbanTask.CategoryId).KanbanTasks.Remove(kanbanTask);
+        }
+
         [RelayCommand]
         public async Task GoToCreateCategory()
         {
             var param = new Dictionary<string, object> { { "board", CurrentBoard } };
             await Shell.Current.GoToAsync(nameof(CreateCategoryPage), param);
         }
+
+        [RelayCommand]
+        public async Task GoToAdminPage()
+        {
+            var param = new Dictionary<string, object> { { "board", CurrentBoard } };
+            await Shell.Current.GoToAsync(nameof(AdminPage), param);
+        }
+
         async partial void OnCurrentBoardChanged(Board value)
         {
-            value.Members = await _memberService.GetMembershipsByBoard(value.Id);
+            var members = await _memberService.GetMembershipsByBoard(value.Id);
+            value.Members = members.ToList();
+            var userId = await SecureStorage.GetAsync("userId");
+            CurrentMember = value.Members.FirstOrDefault(m => m.UserId == int.Parse(userId));
             var categories = await _categoryService.GetCategoriesByBoard(value.Id);
             foreach (var category in categories) { Categories.Add(category); }
-            value.Categories = Categories;
+            value.Categories = Categories.ToList();
         }
+
         [RelayCommand]
         public async Task InviteButton()
         {
