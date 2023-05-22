@@ -15,7 +15,17 @@
                     Text="{Binding NewKanbanTask.Title}"/>
                 </Frame>
                 <Frame Padding="10,0,0,0">
-                    <DatePicker Date="{Binding NewKanbanTask.Deadline}"/>
+                    <Entry Placeholder="Beskrivelse"
+                    PlaceholderColor="Gray"
+                    Text="{Binding NewKanbanTask.Description}"/>
+                </Frame>
+                <Frame Padding="10,0,0,0">
+                    <HorizontalStackLayout>
+                        <Label Text="Deadline: "/>
+                        <CheckBox IsChecked="{Binding HasDeadline}"/>
+                        <DatePicker IsVisible="{Binding HasDeadline}" Date="{Binding NewKanbanTask.Deadline}" Format="dd/MM/yyyy"/>
+                        <TimePicker IsVisible="{Binding HasDeadline}" Time="{Binding TimeSpanFix}" />
+                    </HorizontalStackLayout>
                 </Frame>
                 <Button
                 Margin="50,0,50,0"

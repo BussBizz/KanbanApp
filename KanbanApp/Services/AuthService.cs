@@ -28,7 +28,7 @@ namespace KanbanApp.Services
 
         public async Task DeleteToken()
         {
-            await DeleteData<dynamic>(apiPath);
+            await DeleteData(apiPath);
         }
 
         private class LoginDTO

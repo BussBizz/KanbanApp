@@ -61,11 +61,10 @@ namespace KanbanApp.Services
             return result;
         }
 
-        public async Task<Invite> DeleteInvite(Invite invite)
+        public async Task DeleteInvite(Invite invite)
         {
             var path = $"{_apiPath}/{invite.Id}";
-            var result = await DeleteData<Invite>(path);
-            return result;
+            await DeleteData(path);
         }
 
         private string RandomString(int length = 6)

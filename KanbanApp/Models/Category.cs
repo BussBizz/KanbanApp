@@ -15,7 +15,7 @@
         public Member? Creator { get; set; }
 
         // Collection prop
-        public ICollection<KanbanTask> KanbanTasks { get; set; } = null!;
+        public List<KanbanTask> KanbanTasks { get; set; } = null!;
         public Category()
         {
             KanbanTasks = new List<KanbanTask>();

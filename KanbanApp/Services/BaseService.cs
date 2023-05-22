@@ -7,8 +7,8 @@ namespace KantineApp.BL.Services;
 public class BaseService
 {
     private HttpClient _httpClient;
-    private string _host = "https://891a-2-111-92-213.ngrok-free.app";
-    //private string _host = "https://localhost:7126";
+    //private string _host = "https://891a-2-111-92-213.ngrok-free.app";
+    private string _host = "https://localhost:7126";
 
     public BaseService()
     {
@@ -75,8 +75,8 @@ public class BaseService
 
             var requestUri = GetUri(apiPath);
 
-            HttpContent content =
-                new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var scontent = JsonConvert.SerializeObject(data);
+            HttpContent content = new StringContent(scontent, Encoding.UTF8, "application/json");
             var result = await _httpClient.PutAsync(requestUri, content);
 
             if (result.IsSuccessStatusCode)
@@ -94,7 +94,7 @@ public class BaseService
         }
     }
 
-    public async Task<T> DeleteData<T>(string apiPath)
+    public async Task DeleteData(string apiPath)
     {
         try
         {
@@ -106,8 +106,7 @@ public class BaseService
 
             if (result.IsSuccessStatusCode)
             {
-                var s = await result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(s);
+                return;
             }
 
             throw new Exception(result.StatusCode.ToString());

@@ -5,14 +5,32 @@
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
              x:DataType="viewmodel:TaskViewModel"
              xmlns:model="clr-namespace:KanbanApp.Models"
+             xmlns:converter="clr-namespace:KanbanApp.Converters"
              Title="{Binding CurrentTask.Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolInverter x:Key="BoolInverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="20" >
-            <Label MaxLines="10" Text="{Binding Description}"/>
-            <Label MaxLines="1" Text="{Binding Deadline}"/>
-            <Label Text="{Binding Creator}"/>
-            <Label Text="{Binding Assigned}"/>
-            <Label Text="STATUS"/>
+            <Label MaxLines="10" Text="{Binding CurrentTask.Description, StringFormat='Beskrivelse: {0}'}"/>
+            <Label MaxLines="1" Text="{Binding CurrentTask.Deadline, TargetNullValue='Deadline: Ingen', StringFormat='Deadline: {0:dd}/{0:MM}/{0:yyyy} - {0:hh}:{0:mm}'}"/>
+            <Label Text="{Binding CurrentTask.Creator.User.Name, StringFormat='Oprettet af: {0}', FallbackValue='Bruger slettet.'}"/>
+            <HorizontalStackLayout>
+                <Label Text="{Binding CurrentTask.Assigned.User.Name, StringFormat='Ansvarlig: {0}', FallbackValue='Ansvarlig: Ingen'}"/>
+                <Button Text="Sæt ansvarlig"
+                    IsVisible="{Binding Member.CanAssign}"
+                    Command="{Binding AssignTaskCommand}"/>
+            </HorizontalStackLayout>
+            <Label Text="{Binding CurrentTask.CompletedBy.User.Name, FallbackValue='Status: Ikke gennemført', StringFormat='Status: {0} har gennemført opgaven'}"/>
+            <VerticalStackLayout IsVisible="{Binding Member.CanComplete}">
+                <Button Text="Gennemfør"
+                    Command="{Binding CompleteTaskCommand}"
+                    IsVisible="{Binding CurrentTask.TaskCompleted, Converter={StaticResource BoolInverter}}"/>
+            </VerticalStackLayout>
             <Label Text="Kommentare:" FontSize="Medium"/>
             <CollectionView ItemsSource="{Binding Comments}" >
                 <CollectionView.ItemTemplate>
@@ -34,5 +52,5 @@
             </Frame>
         </VerticalStackLayout>
     </ScrollView>
-    
+
 </ContentPage>
