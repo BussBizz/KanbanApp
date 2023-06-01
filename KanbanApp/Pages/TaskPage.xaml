@@ -20,13 +20,14 @@
             <Label MaxLines="1" Text="{Binding CurrentTask.Deadline, TargetNullValue='Deadline: Ingen', StringFormat='Deadline: {0:dd}/{0:MM}/{0:yyyy} - {0:hh}:{0:mm}'}"/>
             <Label Text="{Binding CurrentTask.Creator.User.Name, StringFormat='Oprettet af: {0}', FallbackValue='Bruger slettet.'}"/>
             <HorizontalStackLayout>
-                <Label Text="{Binding CurrentTask.Assigned.User.Name, StringFormat='Ansvarlig: {0}', FallbackValue='Ansvarlig: Ingen'}"/>
+                <Label Text="{Binding CurrentTask.Assigned.User.Name, StringFormat='Ansvarlig: {0}', FallbackValue='Ansvarlig: Ingen'}" VerticalTextAlignment="Center"/>
                 <Button Text="Sæt ansvarlig"
+                    Margin="20,0,0,0"
                     IsVisible="{Binding Member.CanAssign}"
                     Command="{Binding AssignTaskCommand}"/>
             </HorizontalStackLayout>
             <Label Text="{Binding CurrentTask.CompletedBy.User.Name, FallbackValue='Status: Ikke gennemført', StringFormat='Status: {0} har gennemført opgaven'}"/>
-            <VerticalStackLayout IsVisible="{Binding Member.CanComplete}">
+            <VerticalStackLayout IsVisible="{Binding Member.CanComplete}" Padding="15">
                 <Button Text="Gennemfør"
                     Command="{Binding CompleteTaskCommand}"
                     IsVisible="{Binding CurrentTask.TaskCompleted, Converter={StaticResource BoolInverter}}"/>

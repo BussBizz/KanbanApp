@@ -14,41 +14,44 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="20">
         <CollectionView ItemsSource="{Binding Members}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Member}">
-                    <VerticalStackLayout>
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding User.Name, StringFormat='Navn: {0}'}"/>
-                                <Button Text="Fjerm medlem"
+                    <Border StrokeShape="RoundRectangle 10,10,10,10" Margin="10,15,10,0">
+                        <VerticalStackLayout >
+                            <VerticalStackLayout Spacing="10" Padding="10" >
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding User.Name, StringFormat='Navn: {0}'}" VerticalTextAlignment="Center"/>
+                                    <Button Text="Fjerm medlem"
                                         IsVisible="{Binding IsOwner, Converter={StaticResource BoolInverter}}"
                                         IsEnabled="{Binding IsOwner, Converter={StaticResource BoolInverter}}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdminViewModel}}, Path=RemoveMemberCommand}"
-                                        CommandParameter="{Binding .}"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="Kan administrer: "/>
-                                <CheckBox IsChecked="{Binding CanAdmin}" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="Kan gennemfører: "/>
-                                <CheckBox IsChecked="{Binding CanComplete}"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="Kan krearer: "/>
-                                <CheckBox IsChecked="{Binding CanCreate}"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="Kan angive ansvarlige: "/>
-                                <CheckBox IsChecked="{Binding CanAssign}"/>
-                            </HorizontalStackLayout>
+                                        CommandParameter="{Binding .}"
+                                        Margin="10,0,0,0"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Kan administrer: " VerticalTextAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding CanAdmin}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Kan gennemfører: " VerticalTextAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding CanComplete}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Kan krearer: " VerticalTextAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding CanCreate}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="Kan angive ansvarlige: " VerticalTextAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding CanAssign}"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
-                    </VerticalStackLayout>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Command="{Binding SaveChangesCommand}"/>
+        <Button Command="{Binding SaveChangesCommand}" Text="Gem ændringer" Margin="10"/>
     </VerticalStackLayout>
 </ContentPage>

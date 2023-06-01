@@ -5,13 +5,13 @@
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
              x:DataType="viewmodel:UserInvitesViewModel"
              xmlns:model="clr-namespace:KanbanApp.Models">
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="20" Padding="10">
         <CollectionView ItemsSource="{Binding InviteList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Invite}">
-                    <HorizontalStackLayout>
-                        <Label Text="{Binding Board.Titel}"/>
-                        <Label Text="{Binding Expire, StringFormat='Udløber: {0:MM} {0:dd}, {0:hh}:{0:mm}'}"/>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="{Binding Board.Titel}" VerticalTextAlignment="Center"/>
+                        <Label Text="{Binding Expire, StringFormat='Udløber: {0:MM} {0:dd}, {0:hh}:{0:mm}'}" VerticalTextAlignment="Center"/>
                         <Button Text="Accepter"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserInvitesViewModel}}, Path=AcceptInviteCommand}"
                                 CommandParameter="{Binding .}"/>
@@ -19,9 +19,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <HorizontalStackLayout>
-            <Label Text="Invitations code: "/>
-            <Entry Text="{Binding InviteCode}"/>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Invitations kode:" VerticalTextAlignment="Center"/>
+            <Border StrokeShape="RoundRectangle 10,10,10,10">
+                <Entry Text="{Binding InviteCode}" WidthRequest="150" />
+            </Border>
             <Button Text="Aktiver" Command="{Binding TryCodeCommand}"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>

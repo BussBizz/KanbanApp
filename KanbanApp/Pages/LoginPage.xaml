@@ -39,8 +39,10 @@
                 Margin="90,20,90,0"
                 Text="Ny bruger"
                 Clicked="OnNewUserClicked" />
-            <HorizontalStackLayout>
-                <Entry Text="{Binding Code}"/>
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Border StrokeShape="RoundRectangle 10,10,10,10" Padding="10,0,0,0">
+                    <Entry Text="{Binding Code}" WidthRequest="150" Placeholder="Deltag med kode"/>
+                </Border>
                 <Button Text="Deltag"
                         Command="{Binding CodeLoginCommand}"/>
             </HorizontalStackLayout>
