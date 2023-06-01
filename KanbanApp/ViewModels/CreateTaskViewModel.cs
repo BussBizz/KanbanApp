@@ -31,7 +31,7 @@ namespace KanbanApp.ViewModels
         {
             try
             {
-                NewKanbanTask.Deadline = NewKanbanTask.Deadline.Value.Date + TimeSpanFix;
+                NewKanbanTask.Deadline = HasDeadline ? NewKanbanTask.Deadline.Value.Date + TimeSpanFix : null;
                 NewKanbanTask.CreatorId = CurrentMember.Id;
                 NewKanbanTask.CategoryId = Category.Id;
                 var newKanbanTask = await _tasksService.PostTask(NewKanbanTask);
