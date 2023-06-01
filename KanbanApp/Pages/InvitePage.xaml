@@ -2,12 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KanbanApp.Pages.InvitePage"
-             Title="InvitePage"
+             Title="Inviter brugere"
              xmlns:viewmodel="clr-namespace:KanbanApp.ViewModels"
              x:DataType="viewmodel:InviteViewModel"
              xmlns:model="clr-namespace:KanbanApp.Models">
     <VerticalStackLayout>
-        <Entry Text="{Binding Username}"/>
+        <Border StrokeShape="RoundRectangle 10,10,10,10">
+            <Entry Text="{Binding Username}"/>
+        </Border>
         <Label Text="{Binding UsernameStatus}" TextColor="Red"/>
         <Button Text="{Binding InviteButton}"
                 IsEnabled="{Binding InviteButtonEnabled}"
