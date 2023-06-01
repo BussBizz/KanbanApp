@@ -39,6 +39,7 @@ namespace KanbanApp.ViewModels
                     BoardId = newBoard.Id,
                     CanCreate = true,
                     CanAssign = true,
+                    CanAdmin = true,
                 };
 
                 var membership = await _memberService.CreateMembership(newMembership);
