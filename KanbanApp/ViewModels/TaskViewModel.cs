@@ -38,7 +38,7 @@ namespace KanbanApp.ViewModels
             }
             try
             {
-                NewComment.MemberId = Member.UserId;
+                NewComment.MemberId = Member.Id;
                 NewComment.KanbanTaskId = CurrentTask.Id;
                 var newComment = await _commentsService.PostComment(NewComment);
                 newComment.Member = Member;
